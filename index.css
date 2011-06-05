@@ -64,11 +64,44 @@ li:hover{
     padding: 0 0 10px 0;
 }
 
+#tool{
+    float:left;
+    font: 21px Arial bold;
+    color: #999;
+    margin: 4px 0 0 2px;
+}
+
+#rotate{
+    float:left;
+    width:30px;
+    height:30px;
+    background-image: url('img/rotate.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
 #toolbox li{
     padding:2px 0 0 0;
     width:159px;
     height:28px;
 }
+
+li.selected{
+    background:#bbb;
+}
+
+div.button:hover{
+    background-color:#bbb;
+}
+
+.button .disabled{
+    opacity:40%;
+}
+
+.button .disabled:hover{
+    background:inherit;
+}
+
 
 #center {
     /*border-left: 1px solid black;
@@ -90,7 +123,7 @@ canvas{
     width:960px;
     height:120px;
     border-top: 1.5px #755 solid;
-    margin:0 auto;
+    margin:20px auto 0 auto;
     padding: 20px;
 }
  
