@@ -131,7 +131,7 @@ function snap_direction(){
 }
 
 function draw_trace(trace, color){
-    ctx.lineWidth = 4.0;
+    ctx.lineWidth = 6;
     ctx.lineCap = 'round';
     ctx.strokeStyle = color;
     ctx.beginPath();
