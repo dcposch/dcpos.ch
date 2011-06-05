@@ -82,11 +82,22 @@ function view_redraw(){
 
     //highlight traces
     loc = snap_location(mx,my);
-    ts = traces.find_intersections(loc[0],loc[1]);
-    console.log(ts);
-    for(var i in ts){
-        draw_trace(ts[i], color_trace_highlight);
+
+    if(dstartx == null){
+        ts = traces.find_intersections(loc[0],loc[1]);
+        for(var i in ts){
+            draw_trace(ts[i], color_trace_highlight);
+        }
     }
+    else{
+        ints = traces.net_find_intersections(dstartx,dstarty,loc[0],loc[1]);
+        for(var ix in ints){
+            var ts = ints[ix][0];
+            for(var i in ts){
+                draw_trace(ts[i], color_trace_highlight);
+            }
+        }
+    }    
 
     if(current_trace != null)
         draw_trace(current_trace,color_trace_highlight);
