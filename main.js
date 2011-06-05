@@ -228,4 +228,5 @@ $(function(){
     ctx.translate(0.5,0.5);
     view_clear();
 
+    set_tool("traces");
 });
