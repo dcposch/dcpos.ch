@@ -127,7 +127,7 @@ function snap_direction(){
         dx = (dx > 0) ? davg : -davg;
         dy = (dy > 0) ? davg : -davg;
     }
-    return [dstartx + dx, dstarty + dy];
+    return snap_location(dstartx + dx, dstarty + dy);
 }
 
 function draw_trace(trace, color){
