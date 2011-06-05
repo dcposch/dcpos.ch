@@ -1,0 +1,19 @@
+
+WEB PCB
+*******
+
+Sasha Zbrozek
+Dan Posch
+
+
+Basic functionality:
+* V1: Most things that FreePCB can do
+    * Layout
+* V2: Some things that Altium can do
+    * 3D view using WebGL?
+    * Simulation support? Analog (SPICE)? Digital?
+* V3: Online part library
+    * Direct collaboration (eg Google Docs)?
+    * Versioning collaboration (eg Github)?
+* ????
+* Profit
