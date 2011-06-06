@@ -5,7 +5,7 @@
 
 
 //model
-traces = new pcb_traces();
+pcb = new pcb_traces();
 
 
 //globals
@@ -76,31 +76,32 @@ function view_redraw(){
         view_draw_crosshair(mx,my,false);
 
     //draw traces
-    for(var i in traces.traces){
-        draw_trace(traces.traces[i], color_trace);
+    for(var i = 0; i < pcb.traces.length; i++){
+        draw_trace(pcb.traces[i], color_trace);
     }
 
     //highlight traces
     loc = snap_location(mx,my);
 
     if(dstartx == null){
-        ts = traces.find_intersections(loc[0],loc[1]);
-        for(var i in ts){
-            draw_trace(ts[i], color_trace_highlight);
+        trace_ixs = pcb.find_intersection_ixs(loc[0],loc[1]);
+        for(var i = 0; i < trace_ixs.length; i++){
+            draw_trace(pcb.traces[trace_ixs[i]], color_trace_highlight);
         }
     }
     else{
-        ints = traces.net_find_intersections(dstartx,dstarty,loc[0],loc[1]);
-        for(var ix in ints){
+        ints = pcb.net_find_intersections(dstartx,dstarty,loc[0],loc[1]);
+        for(var ix = 0; ix < ints.length; ix++){
             var ts = ints[ix][0];
-            for(var i in ts){
+            for(var i = 0; i < ts.length; i++){
                 draw_trace(ts[i], color_trace_highlight);
             }
         }
     }    
 
-    if(current_trace != null)
+    if(current_trace != null){
         draw_trace(current_trace,color_trace_highlight);
+    }
 
     //draw pads
     //TODO
@@ -164,7 +165,7 @@ function tool_update(){
 function tool_finish(){
     if(tool=="traces"){
         if(current_trace != null)
-            traces.add_trace(
+            pcb.add_trace(
                 current_trace[0],
                 current_trace[1],
                 current_trace[2],
@@ -240,4 +241,14 @@ $(function(){
     view_clear();
 
     set_tool("traces");
+
 });
+
+
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+      var rest = this.slice((to || from) + 1 || this.length);
+      this.length = from < 0 ? this.length + from : from;
+      return this.push.apply(this, rest);
+};
+

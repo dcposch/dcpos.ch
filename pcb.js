@@ -55,20 +55,20 @@ function pcb_traces() {
             //coincident
             if(Math.abs(numa) < eps && Math.abs(numb) < eps){
                 if(x1 == x2){
-                    if(y3 >= y1 && y3 <= y2) return true;
-                    if(y4 >= y1 && y4 <= y2) return true;
+                    if(y3 >= y1-eps && y3 <= y2+eps) return true;
+                    if(y4 >= y1-eps && y4 <= y2+eps) return true;
                 }
                 else{
-                    if(x3 >= x1 && x3 <= x2) return true;
-                    if(x4 >= x1 && x4 <= x2) return true;
+                    if(x3 >= x1-eps && x3 <= x2+eps) return true;
+                    if(x4 >= x1-eps && x4 <= x2+eps) return true;
                 }
                 if(x3 == x4){
-                    if(y1 >= y3 && y1 <= y4) return true;
-                    if(y2 >= y3 && y2 <= y4) return true;
+                    if(y1 >= y3-eps && y1 <= y4+eps) return true;
+                    if(y2 >= y3-eps && y2 <= y4+eps) return true;
                 }
                 else{
-                    if(x1 >= x3 && x1 <= x4) return true;
-                    if(x2 >= x3 && x2 <= x4) return true;
+                    if(x1 >= x3-eps && x1 <= x4+eps) return true;
+                    if(x2 >= x3-eps && x2 <= x4+eps) return true;
                 }
             }
             return false; 
@@ -85,11 +85,11 @@ function pcb_traces() {
 
     this.net_find_intersection_ixs = function(x1,y1,x2,y2){
         var ret = [];
-        for(var i in this.nets){
+        for(var i = 0; i < this.nets.length; i++){
             var traces = this.nets[i][0];
             var holes = this.nets[i][1];
 
-            for(var j in traces){
+            for(var j = 0; j < traces.length; j++){
                 if(this.traces_intersect([x1,y1,x2,y2],traces[j])){
                     ret.push(i);
                     break;
@@ -103,26 +103,67 @@ function pcb_traces() {
     this.net_find_intersections = function(x1,y1,x2,y2){
         var ret = [];
         var ixs = this.net_find_intersection_ixs(x1,y1,x2,y2);
-        for(var i in ixs){
+        for(var i = 0; i < ixs.length; i++){
             ret.push(this.nets[i]);
         }
         return ret;
     }
 
+    this.add_hole = function(x,y){
+        var hole_ix = this.holes.length;
+        this.holes.push([x,y]);
+
+        var is = this.net_find_intersection_ixs(x,y,x,y);
+        if(is.length > 1){
+            throw "WARNING: new hole intersects more than one existing net";
+        }
+        else if(is.length == 0){
+            //add new net
+            this.nets.push([[],[hole_ix]]);
+        }
+        else{
+            //add to existing net
+            this.nets[i][1].push(hole_ix);
+        }
+    }
 
     this.add_trace = function(x1,y1,x2,y2){
         if(this.find_trace(x1,y1,x2,y2) > -1)
             throw("pcb_trace: attempted double add.");
-        var t = [x1,y1,x2,y2];
-        this.traces.push(t);
+        var trace = [x1,y1,x2,y2];
+        var trace_ix = this.traces.length;
+        this.traces.push(trace);
 
-        this.nets.push([[t],[]]);
+        //find all nets that this trace intersects (which we'll bridge)
+        var is = this.net_find_intersection_ixs(x1,y1,x2,y2);
+        if(is.length > 0){
+            var net0 = this.nets[is[0]];
+
+            //combine all wires and traces into a single net (net0)
+            for(var i = is.length-1; i >= 0; i--){
+                var net = this.nets[is[i]];
+                net0[0] = net0[0].concat(net[0]);
+                net0[1] = net0[1].concat(net[1]);
+
+                this.nets.remove(is[i]);
+            }
+
+            //add new trace to that net
+            net0[0].push(trace_ix);
+        }
+        else{
+            //add new net
+            this.nets.push([[trace_ix],[]]);
+        }
+
+        //DEBUG
+        console.log(this.nets);
     }
 
-    this.find_intersections = function(x,y){
+    this.find_intersection_ixs = function(x,y){
         var ret = [];
 
-        for(var i in this.traces){
+        for(var i = 0; i < this.traces.length; i++){
             var t = this.traces[i];
             x1 = t[0];
             y1 = t[1];
@@ -136,7 +177,7 @@ function pcb_traces() {
             }
             var ty = (y - y1)/(y2-y1);
             if(isNaN(ty) || isNaN(tx) || tx == ty)
-               ret.push(t);
+               ret.push(i);
         }
 
         return ret;
@@ -146,6 +187,7 @@ function pcb_traces() {
         var ix = this.find_trace(x1,y1,x2,y2);
         if(ix < 0)
             throw("pcb_trace: trace not found");
-        this.traces.removeAt(ix);
+        this.traces.remove(ix);
     }
 }
+
