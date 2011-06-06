@@ -16,7 +16,7 @@
 
 var eps = 0.000000001;
 
-function pcb_traces() {
+function pcb_model() {
 
     this.traces = [];
     this.holes = [];
@@ -54,22 +54,30 @@ function pcb_traces() {
         if(Math.abs(denom) < eps){
             //coincident
             if(Math.abs(numa) < eps && Math.abs(numb) < eps){
-                if(x1 == x2){
-                    if(y3 >= y1-eps && y3 <= y2+eps) return true;
-                    if(y4 >= y1-eps && y4 <= y2+eps) return true;
-                }
-                else{
-                    if(x3 >= x1-eps && x3 <= x2+eps) return true;
-                    if(x4 >= x1-eps && x4 <= x2+eps) return true;
-                }
-                if(x3 == x4){
-                    if(y1 >= y3-eps && y1 <= y4+eps) return true;
-                    if(y2 >= y3-eps && y2 <= y4+eps) return true;
-                }
-                else{
-                    if(x1 >= x3-eps && x1 <= x4+eps) return true;
-                    if(x2 >= x3-eps && x2 <= x4+eps) return true;
-                }
+
+                //normalize
+                var xn1 = Math.min(x1,x2);
+                var xn2 = Math.max(x1,x2);
+                var xn3 = Math.min(x3,x4);
+                var xn4 = Math.max(x3,x4);
+                var yn1 = Math.min(y1,y2);
+                var yn2 = Math.max(y1,y2);
+                var yn3 = Math.min(y3,y4);
+                var yn4 = Math.max(y3,y4);
+
+                if(!(yn3 >= yn1-eps && yn3 <= yn2+eps ||
+                    yn4 >= yn1-eps && yn4 <= yn2+eps ||
+                    yn1 >= yn3-eps && yn1 <= yn4+eps ||
+                    yn2 >= yn3-eps && yn2 <= yn4+eps))
+                    return false;
+
+                if(!(xn3 >= xn1-eps && xn3 <= xn2+eps ||
+                    xn4 >= xn1-eps && xn4 <= xn2+eps ||
+                    xn1 >= xn3-eps && xn1 <= xn4+eps ||
+                    xn2 >= xn3-eps && xn2 <= xn4+eps))
+                    return false;
+
+                return true;
             }
             return false; 
         }
@@ -86,11 +94,12 @@ function pcb_traces() {
     this.net_find_intersection_ixs = function(x1,y1,x2,y2){
         var ret = [];
         for(var i = 0; i < this.nets.length; i++){
-            var traces = this.nets[i][0];
-            var holes = this.nets[i][1];
+            var trace_ixs = this.nets[i][0];
+            var hole_ixs = this.nets[i][1];
 
-            for(var j = 0; j < traces.length; j++){
-                if(this.traces_intersect([x1,y1,x2,y2],traces[j])){
+            for(var j = 0; j < trace_ixs.length; j++){
+                var trace = this.traces[trace_ixs[j]];
+                if(this.traces_intersect([x1,y1,x2,y2],trace)){
                     ret.push(i);
                     break;
                 }
@@ -101,6 +110,11 @@ function pcb_traces() {
     }
 
     this.net_find_intersections = function(x1,y1,x2,y2){
+        if(typeof x2 == 'undefined')
+            x2 = x1;
+        if(typeof y2 == 'undefined')
+            y2 = y1;
+
         var ret = [];
         var ixs = this.net_find_intersection_ixs(x1,y1,x2,y2);
         for(var i = 0; i < ixs.length; i++){
@@ -128,6 +142,7 @@ function pcb_traces() {
     }
 
     this.add_trace = function(x1,y1,x2,y2){
+
         if(this.find_trace(x1,y1,x2,y2) > -1)
             throw("pcb_trace: attempted double add.");
         var trace = [x1,y1,x2,y2];
@@ -138,18 +153,22 @@ function pcb_traces() {
         var is = this.net_find_intersection_ixs(x1,y1,x2,y2);
         if(is.length > 0){
             var net0 = this.nets[is[0]];
+            console.log("MERGE");
+            console.log(net0);
 
             //combine all wires and traces into a single net (net0)
-            for(var i = is.length-1; i >= 0; i--){
+            for(var i = is.length-1; i >= 1; i--){
                 var net = this.nets[is[i]];
                 net0[0] = net0[0].concat(net[0]);
                 net0[1] = net0[1].concat(net[1]);
 
-                this.nets.remove(is[i]);
+                this.nets = this.nets.remove(is[i]);
             }
 
             //add new trace to that net
             net0[0].push(trace_ix);
+
+            console.log(net0);
         }
         else{
             //add new net
@@ -157,6 +176,7 @@ function pcb_traces() {
         }
 
         //DEBUG
+        console.log("FINISHED ADD_TRACE:");
         console.log(this.nets);
     }
 

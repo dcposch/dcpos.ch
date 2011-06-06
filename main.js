@@ -5,7 +5,7 @@
 
 
 //model
-pcb = new pcb_traces();
+pcb = new pcb_model();
 
 
 //globals
@@ -83,21 +83,20 @@ function view_redraw(){
     //highlight traces
     loc = snap_location(mx,my);
 
+    var ints = []
     if(dstartx == null){
-        trace_ixs = pcb.find_intersection_ixs(loc[0],loc[1]);
-        for(var i = 0; i < trace_ixs.length; i++){
-            draw_trace(pcb.traces[trace_ixs[i]], color_trace_highlight);
-        }
+        ints = pcb.net_find_intersections(loc[0],loc[1]);
     }
     else{
         ints = pcb.net_find_intersections(dstartx,dstarty,loc[0],loc[1]);
-        for(var ix = 0; ix < ints.length; ix++){
-            var ts = ints[ix][0];
-            for(var i = 0; i < ts.length; i++){
-                draw_trace(ts[i], color_trace_highlight);
-            }
-        }
     }    
+    for(var ix = 0; ix < ints.length; ix++){
+        var trace_ixs = ints[ix][0];
+        for(var i = 0; i < trace_ixs.length; i++){
+            var trace = pcb.traces[trace_ixs[i]];
+            draw_trace(trace, color_trace_highlight);
+        }
+    }
 
     if(current_trace != null){
         draw_trace(current_trace,color_trace_highlight);
