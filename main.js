@@ -13,7 +13,7 @@ var vp = document.getElementById('viewport'); //viewport (<canvas>)
 var ctx; //canvas context
 var width, height; //viewport size, px
 var mx, my; //mouse location
-var dstartx, dstarty;
+var dstartx, dstarty; //drag state
 dstartx = dstarty = null;
 
 //ui state
@@ -23,12 +23,14 @@ var current_trace = null;
 
 //constants
 var grid_spacing = 20; //px
+var line_width = 10;
 var snap_to_grid = true;
 
 var color_background = '#000';
 var color_grid = '#333';
 var color_trace = '#bb0';
 var color_trace_highlight = '#ddd';
+var color_trace_error = '#e00';
 
 
 
@@ -68,12 +70,21 @@ function view_draw_crosshair(x,y,snap_to_grid){
     ctx.stroke();
 }
 
+function view_draw_nets(nets, color){
+    for(var ix = 0; ix < nets.length; ix++){
+        var trace_ixs = nets[ix][0];
+        for(var i = 0; i < trace_ixs.length; i++){
+            var trace = pcb.traces[trace_ixs[i]];
+            draw_trace(trace, color);
+        }
+    }
+}
+
 function view_redraw(){
+
+
+    //draw background
     view_clear();
-    if(tool=='traces')
-        view_draw_crosshair(mx,my,true);
-    else if(tool==null)
-        view_draw_crosshair(mx,my,false);
 
     //draw traces
     for(var i = 0; i < pcb.traces.length; i++){
@@ -82,7 +93,6 @@ function view_redraw(){
 
     //highlight traces
     loc = snap_location(mx,my);
-
     var ints = []
     if(dstartx == null){
         ints = pcb.net_find_intersections(loc[0],loc[1]);
@@ -90,20 +100,32 @@ function view_redraw(){
     else{
         ints = pcb.net_find_intersections(dstartx,dstarty,loc[0],loc[1]);
     }    
-    for(var ix = 0; ix < ints.length; ix++){
-        var trace_ixs = ints[ix][0];
-        for(var i = 0; i < trace_ixs.length; i++){
-            var trace = pcb.traces[trace_ixs[i]];
-            draw_trace(trace, color_trace_highlight);
-        }
-    }
+    view_draw_nets(ints, color_trace_highlight);
 
+    //draw current trace
     if(current_trace != null){
-        draw_trace(current_trace,color_trace_highlight);
+        //highlight errors
+        var ixs = pcb.trace_interference_ixs(current_trace);
+        var is_legal = (ixs.length == 0);
+        for(var i = 0; i < ixs.length; i++)
+            draw_trace(pcb.traces[ixs[i]], color_trace_error);
+
+        //draw trace
+        if(is_legal)
+            draw_trace(current_trace,color_trace_highlight);
+        else
+            draw_trace(current_trace,color_trace_error);
     }
 
     //draw pads
-    //TODO
+
+
+    //draw cursor
+    if(tool=='traces')
+        view_draw_crosshair(mx,my,true);
+    else if(tool==null)
+        view_draw_crosshair(mx,my,false);
+
 }
 
 
@@ -121,9 +143,9 @@ function snap_location(x,y){
     return [x,y];
 }
 
-function snap_direction(){
-    var dx = mx - dstartx;
-    var dy = my - dstarty;
+function snap_direction(x1,y1,x2,y2){
+    var dx = x2-x1;
+    var dy = y2-y1;
     if(Math.abs(dx) > 2*Math.abs(dy)){
         //horizontal
         dy = 0;
@@ -138,11 +160,11 @@ function snap_direction(){
         dx = (dx > 0) ? davg : -davg;
         dy = (dy > 0) ? davg : -davg;
     }
-    return snap_location(dstartx + dx, dstarty + dy);
+    return snap_location(x1 + dx, y1 + dy);
 }
 
 function draw_trace(trace, color){
-    ctx.lineWidth = 6;
+    ctx.lineWidth = line_width;
     ctx.lineCap = 'round';
     ctx.strokeStyle = color;
     ctx.beginPath();
@@ -150,6 +172,15 @@ function draw_trace(trace, color){
     ctx.lineTo(trace[2], trace[3]);
 
     ctx.stroke();
+    ctx.closePath();
+
+    ctx.fillStyle = color;
+    ctx.arc(trace[0],trace[1],line_width*0.6,0,2*Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.arc(trace[2],trace[3],line_width*0.6,0,2*Math.PI);
+    ctx.closePath();
+    ctx.fill();
 }
 
 function tool_start(){
@@ -157,18 +188,25 @@ function tool_start(){
 }
 function tool_update(){
     if(tool == "traces"){
-        var msnap = snap_direction();
-        current_trace = [dstartx,dstarty,msnap[0],msnap[1]];
+        var x = dstartx;
+        var y = dstarty;
+        var msnap = snap_direction(x,y,mx,my);
+        current_trace = [x,y,msnap[0],msnap[1]];
     }
 }
 function tool_finish(){
     if(tool=="traces"){
-        if(current_trace != null)
-            pcb.add_trace(
-                current_trace[0],
-                current_trace[1],
-                current_trace[2],
-                current_trace[3]);
+        if(current_trace != null){
+            var ixs = pcb.trace_interference_ixs(current_trace);
+            var is_legal = (ixs.length == 0);
+            if(is_legal){
+                pcb.add_trace(
+                    current_trace[0],
+                    current_trace[1],
+                    current_trace[2],
+                    current_trace[3]);
+            }
+        }
         current_trace = null;
     }
 }

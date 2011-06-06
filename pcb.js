@@ -18,9 +18,14 @@ var eps = 0.000000001;
 
 function pcb_model() {
 
+    //elements [x1,y1,x2,y2,width]
     this.traces = [];
+    //elements [x,y,radius]
     this.holes = [];
+    //elements [trace_ixs, hole_ixs]
     this.nets = [];
+    //elements [x,y] => object
+    this.points = {};
 
     this.find_trace = function(x1,y1,x2,y2){
         for(var i = 0; i < this.traces.length; i++){
@@ -33,6 +38,19 @@ function pcb_model() {
             }
         }
         return -1;
+    }
+
+    this.trace_interference_ixs = function(trace){
+        var ret = [];
+        for(var i = 0; i < this.traces.length; i++){
+            var t = this.traces[i];
+            if(this.traces_intersect(t,trace) &&
+                !this.traces_intersect(t,[trace[0],trace[1],trace[0],trace[1]]) &&
+                !this.traces_intersect(t,[trace[2],trace[3],trace[2],trace[3]])){
+                ret.push(i);
+            }
+        }
+        return ret;
     }
 
     this.traces_intersect = function(t1,t2){
@@ -118,7 +136,7 @@ function pcb_model() {
         var ret = [];
         var ixs = this.net_find_intersection_ixs(x1,y1,x2,y2);
         for(var i = 0; i < ixs.length; i++){
-            ret.push(this.nets[i]);
+            ret.push(this.nets[ixs[i]]);
         }
         return ret;
     }
@@ -162,7 +180,7 @@ function pcb_model() {
                 net0[0] = net0[0].concat(net[0]);
                 net0[1] = net0[1].concat(net[1]);
 
-                this.nets = this.nets.remove(is[i]);
+                this.nets.remove(is[i]);
             }
 
             //add new trace to that net
