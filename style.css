@@ -1,0 +1,13 @@
+h1,h2,h3,h4 {
+    font-family:"Trebuchet MS","Helvetica Neue",sans-serif;
+    font-weight:bold;
+}
+body {
+    font:bold 13px "Courier New",monospace;
+}
+span.val {
+    display:inline-block;
+    width:80px;
+    text-align:right;
+    margin-right:6px;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+    <title>Luminos Telemetry Dash</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <h2>Luminos Telemetry Dash</h2>
+
+    <script type="text/x-handlebars">
+      {{outlet}}
+    </script>
+    <script type="text/x-handlebars" id="index">
+        {{debug}}
+        <h4>SPEED/DIST:</h4>
+        <div><span class="val">{{num speedKph}}</span><span>kph</span></div>
+        <div><span class="val">{{num speedMph}}</span><span>mph</span></div>
+        <div><span class="val">{{num distKm}}</span><span>km</span></div>
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.2/ember.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript"></script>
+</body>
