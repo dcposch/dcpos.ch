@@ -2,14 +2,27 @@ h1,h2,h3,h4 {
     font-family:"Trebuchet MS","Helvetica Neue",sans-serif;
     font-weight:bold;
 }
+h4 {
+    margin:0 0 3px 0;
+}
 body {
     font:bold 13px "Courier New",monospace;
 }
+span.name {
+    display:inline-block;
+    width:30px;
+    text-align:right;
+}
 span.val {
     display:inline-block;
-    width:80px;
+    width:50px;
     text-align:right;
     margin-right:6px;
+}
+span.units {
+}
+.tee-table {
+    margin-bottom:10px    
 }
 
 
