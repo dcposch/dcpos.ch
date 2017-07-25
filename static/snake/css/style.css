@@ -1,0 +1,26 @@
+.wrapper {
+    width:512px;
+    margin:0 auto;
+}
+
+#snake-status {
+    font:bold 32px "Helvetica Neue",Arial,sans-serif;
+}
+
+#snake-grid table {
+    table-layout:fixed;
+}
+#snake-grid td {
+    width:32px;
+    height:32px;
+    background:#ddd;
+}
+#snake-grid .flash {
+    background:#eee;
+}
+#snake-grid .snake-food {
+    background: #a00;
+}
+#snake-grid .snake-body {
+    background: #03a;
+}

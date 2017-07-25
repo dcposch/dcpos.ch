@@ -1,0 +1,12 @@
+2011-09-17 17:05:30.964179: Got voltage: 3.508334
+2011-09-17 17:05:30.964179: Got voltage: 3.508334
+2011-09-17 17:05:30.964300: Got current: 0.000000
+2011-09-17 17:05:30.964300: Got current: 0.000000
+2011-09-17 17:05:30.964363: A failure occurred: local variable 'time' referenced before assignment
+2011-09-17 17:05:30.964363: A failure occurred: local variable 'time' referenced before assignment
+2011-09-17 17:05:36.044179: Got voltage: 3.496721
+2011-09-17 17:05:36.044179: Got voltage: 3.496721
+2011-09-17 17:05:36.044265: Got current: 0.000000
+2011-09-17 17:05:36.044265: Got current: 0.000000
+2011-09-17 17:05:36.044324: A failure occurred: local variable 'time' referenced before assignment
+2011-09-17 17:05:36.044324: A failure occurred: local variable 'time' referenced before assignment

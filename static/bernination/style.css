@@ -1,0 +1,140 @@
+
+body {
+max-width: 1024px;
+margin: 0 auto;
+font-family: sans-serif;
+font-size: 24px;
+line-height: 1.5;
+color: #555;
+}
+
+img.logo {
+display: block;
+margin: 20px auto;
+width: 120px;
+height: 120px;
+}
+
+h1 .logo1 { animation: 3s ease 0.00s infinite flame1; }
+h1 .logo2 { animation: 3s ease 0.20s infinite flame1; }
+h1 .logo3 { animation: 3s ease 0.40s infinite flame1; }
+h1 .logo4 { animation: 3s ease 0.60s infinite flame1; }
+h1 .logo5 { animation: 3s ease 0.80s infinite flame1; }
+h1 .logo6 { animation: 3s ease 1.00s infinite flame1; }
+h1 .logo7 { animation: 3s ease 1.20s infinite flame1; }
+h1 .logo8 { animation: 3s ease 1.40s infinite flame1; }
+h1 .logo9 { animation: 3s ease 1.60s infinite flame1; }
+h1 .logo10 { animation: 3s ease 1.80s infinite flame1; }
+h1 .logo11 { animation: 3s ease 2.00s infinite flame1; }
+
+@keyframes flame1 {
+  0% { color: #3174bf }
+  20% { color: #2171b5 }
+  40% { color: #6baed6 }
+  60% { color: #bdd7e7 }
+  80% { color: #6baed6 }
+}
+
+h1 {
+color: #3174bf;
+font: bold 80px sans-serif;
+text-align: center;
+margin: 20px 0;
+letter-spacing: -6px;
+}
+
+h2 {
+font: bold 32px sans-serif;
+margin: 40px 0 20px 0;
+}
+
+div.leaderboard, div.signup {
+width: 100%;
+max-width: 800px;
+margin: 0 auto;
+}
+
+table {
+color: #fff;
+width: 100%;
+}
+
+table th, table td {
+padding: 12px;
+font-family: sans-serif;
+}
+
+/* left column */
+table tr>*:nth-child(1) {
+text-align:left;
+}
+
+/* right column */
+table tr>*:nth-child(2) {
+text-align:right;
+}
+
+/* rainbow palette: #f37b87 #e85f95 #a57bba #56a8da #4abcbd #a7d477 #7ec136 #fba929 */
+/* header row */
+table tr:nth-child(1)>* {
+background-color: #f37b87;
+}
+/* row 1 */
+table tr:nth-child(2)>* {
+background-color: #e85f95;
+}
+table tr:nth-child(3)>* {
+background-color: #a57bba;
+}
+table tr:nth-child(4)>* {
+background-color: #56a8da;
+}
+table tr:nth-child(5)>* {
+background-color: #4abcbd;
+}
+table tr:nth-child(6)>* {
+background-color: #a7d477;
+}
+table tr:nth-child(7)>* {
+background-color: #7ec136;
+}
+table tr:nth-child(8)>* {
+background-color: #fba929;
+}
+
+input.email {
+color: #fff;
+background-color: #fc5;
+font: 24px sans-serif;
+border: none;
+padding: 12px;
+}
+
+/* fire icon color: e73a00 */
+button.signup {
+background: no-repeat center url(fire-1-small.png) #bf3000;
+font: 24px sans-serif;
+border: none;
+margin: 0 10px;
+padding: 12px;
+width:100px;
+cursor:pointer;
+}
+
+button.signup:hover {
+background-color: #cc3300;
+}
+
+button.signup:active {
+background-color: #e73a00;
+}
+
+footer {
+max-width:800px;
+margin: 40px auto;
+padding: 20px 0;
+border-top: 1px solid #ddd;
+color: #aaa;
+font-size: 0.8em;
+text-align: center;
+}

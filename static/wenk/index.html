@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>???</title>
+<style>
+body {
+    overflow: hidden;
+}
+#wenk-img {
+    height: 90vh;
+    width: 60vh;
+    cursor: pointer;
+    background: url("gunter.png") no-repeat;
+    background-size: contain;
+}
+#wenk-img:hover {
+    background: url("gunter2.png") no-repeat;
+    background-size: contain;
+}
+</style>
+</head>
+<body>
+<center>
+    <div id="wenk-img" />
+</center>
+<audio id="wenk-audio">
+    <source src="wenk.wav" />
+</audio>
+<script>
+document.getElementById("wenk-img").addEventListener("click", play)
+setTimeout(play, 1000)
+function play () {
+    document.getElementById("wenk-audio").play()
+}
+</script>
+</body>
+</html>

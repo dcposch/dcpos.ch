@@ -1,0 +1,19 @@
+DC Posch
+dcposch@dcpos.ch
+
+Trying out WebGL.
+
+Making a voxel game. 
+
+I want to test two ideas specifically:
+* Voxel level-of-detail, so you can see to the horizon
+  (Minecraft never lets you see further than ~25 or so 16x16 chunks)
+* Peer-to-peer updates, probably using Webtorrent
+
+I want a single world. Everyone who visits the right URL can play. 
+
+The game will be a collection of npm modules that each does just one thing.
+I want it to be easy to hack, modify, and reuse.
+
+Goals for the modules:
+* lighter than 3js. everything that's memory intensive should be Float32Array, etc, not JS objects.

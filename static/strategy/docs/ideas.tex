@@ -1,0 +1,186 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{amsmath, amsthm, SIunits}
+\renewcommand{\qedsymbol}{}
+\date{August 2011}
+\author{}
+\title{Solar Car Strategy Ideas}
+
+\begin{document}
+\maketitle
+
+\section{Power consumption}
+\subsection{Rolling resistance}
+
+Mass of the car:
+
+$$m \approx 160\kilogram + 80\kilogram = 240 \kilogram \approx 530 lbs$$
+$$F_N = mg = 2350 \newton$$
+
+Estimated cruise speed:
+
+$$v \approx 55 \mbox{mph} \approx 90 \kilo\meter\per\hour = 25 \meter\per\second$$
+
+Very rough estimate of Schwalbe rolling resistance, twice that of a Dunlop SolarMax:
+
+$$C_{rr} \approx 0.005$$
+$$P_{rr} = C_{rr}F_Nv = 294 \watt$$
+
+\mbox{}\\
+\textbf{Comparing a few tire models using the same assumptions}
+
+\begin{tabular}{l|l|l}
+Tire & $C_{rr}$ & Power (watts) \\
+\hline 
+Michelin 45-75R16 Radial 16" & 0.0014 & 82 \\
+Dunlop SolarMax D850 16" & 0.0025 & 147 \\
+Bridgestone Ecopia EP80 14" & ? & ? \\
+Schwalbe HS437 Energizer S 16" & 0.005 & 294 \\
+Sava 16"  & ? & $>300$
+\end{tabular}
+
+\mbox{}\\
+Sensitivity (assuming $C_{rr} = 0.005$):
+
+
+\begin{tabular}{r|l}
+1 kg additional weight & 1.23 watts \\
+1 kph speed increase & 3.26 watts 
+\end{tabular}
+\mbox{}\\
+
+\subsection{Drag}
+$$P_{aero} = \frac 1 2 \rho C_D A v^3 $$
+According to Danny, 
+$$F_{aero} \approx 25 \newton \mbox{ at } v = 55 \mbox{mph} \approx 25 \meter\per\second$$
+$$P_{aero} = F_{aero}v \approx 700 \watt \mbox{ at } v = 55 \mbox{mph} \approx 25 \meter\per\second$$
+Assuming this is at 1 atm pressure and room temperature (20 C):
+$$\rho = 1.204$$
+$$C_D A \approx 0.0781$$
+$$A \approx 0.68 \meter^2$$
+$$C_D \approx 0.115$$
+
+\subsection{Total}
+
+Total power consumption, assuming a cruise speed of $25 \meter\per\second$, is:
+$$P_{total} = P_{rr} + P_{aero} + P_{quiescent}$$
+$$P_{total} = 294 + 700 + 6 = 1000 W$$
+
+We should be able to to cruise at 55mph while drawing 1 kW. That gives us 5:20 of driving time on just the batteries, easily enough to allow us to drive the entire race at a constant speed.
+
+
+
+\section{Power budget}
+
+Sunrise and sunset happens at roughly 6am and 6:40pm, respectively. That's race time (Southern Australia is off by an hour, but the entire race is run on Northern time). This gives us two hours of charge time every morning and somewhat less every evening. We will average less than half of full array power during those times.
+
+Calculating full array power.
+
+Array area:
+$$a_{cells} = 6 \meter^2$$
+$$a_{projected} = 5.9 \meter^2$$
+Approximate maximum insolation (perpendicular plate):
+$$p_{insolation} = 1000 \watt\per{\meter^2}$$
+Efficiency of bin-I Sunpower C60s:
+$$e = 22.5\%$$
+$$p_{array} = p_{insolation}a_{projected}e = 1327 \watt$$
+
+Measured value, using the BK Precision Load to get an IV trace:
+$$p_{array} = p_{insolation}a_{projected}e = 1276 \watt$$
+
+\subsection{Tracker efficiency}
+Assuming nominal battery voltage: $3.6\cdot35 = 126$. Also assuming that $V_{mpp} = $
+
+\mbox{}\\
+\begin{tabular}{lllll}
+Channel & Tracker & Panels (3x5 cells each) & Boost ratio & Efficiency\\
+\hline
+1 & Dilithium & 12 \\
+2 & Dilithium & 8 \\
+3 & Sasha & 3 \\
+4 & Sasha & 3 \\
+\end{tabular}
+\mbox{}\\
+
+Bottom line (weighted average) efficiency: $$98.5\%$$
+
+This corresponds to a peak input power of about 1.25 kW at the battery pack, at $1000 \watt\per{\meter^2}$ insolation:
+
+$$p_{mppt} = 0.985 \cdot p_{array} = 1257 W$$
+
+\subsection{Array stand charging}
+
+Four rough overnight locations: Daly Waters, Ti Tree, Marla, Port Augusta. \\
+
+Rougher: Katherine, Alice Springs (x2), Port Augusta. \\
+
+All time values in race time (Northern Territory time, UTC+9:30).
+
+\mbox{}\\
+\begin{tabular}{lllrlrl}
+Location & Sunrise & Sunset & Mins eve & morn & Wh eve & morn \\
+\hline
+Daly Waters & 6:00 & 19:00 & 120 & 120 & 1.00 & 1.00 \\ 
+Ti Tree & 6:00 & 19:00 & 120 & 120 & 1.00 & 1.00 \\ 
+Marla & 6:00 & 19:00 & 120 & 120 & 1.00 & 1.00 \\ 
+Port Augusta & 6:00 & 19:00 & 120 & 120 & 1.00 & 1.00 \\ 
+\end{tabular}
+\mbox{}\\
+
+Total array stand power: $$1337 Wh$$
+
+\subsection{Control stops}
+\mbox{}\\
+\begin{tabular}{llrl}
+Location & Minutes & Race day & Arrival time \\
+\hline
+Katherine & 30 & 1 & 12:00 \\
+Alice Springs & 30 & 1 & 12:00 \\
+Port Augusta & 30 & 1 & 12:00 \\
+\end{tabular}
+\mbox{}\\
+
+
+\section{Race timing}
+
+\subsection{Logisitics}
+
+We're driving from 8:00am to 5:00pm each day, except for the first day. We can expect to start the first day a few minutes after 8:30am. 
+
+The course is 3010km (from start line to end of timing, outside Adelaide).
+
+$$t = \frac d v = 2007 \mbox{min} \approx 2000 \mbox{min}$$
+
+So we could expect to arrive at 2:50pm on the fourth race day with no control stops. With control stops, we can expect to arrive at the start of the fifth race day. The exact number of length of the stops doesn't seem to be public yet.
+
+This affects strategy. If we spend less time in control stops, in addition to directly cutting our charging time, it might allow us to get to Adelaide on the fourth day. This would significantly reduce our energy budget, since we'd miss a day and night of charging. If we just spill over onto the fifth day, we'll have to travel at two speeds: one which gets us to almost-empty at end of day four, and then a second, higher speed on day five into the finish line.
+
+
+Assuming we arrive on day five, our energy budget is:
+\begin{itemize}
+\item 5.3 kWh initial charge
+\item Four evenings+mornings of array-stand charging (~8 kWh)
+\item Several hours of control-stop charging (~4 kWh)
+\item 2000 minutes of charging while driving (~23 kWh)
+\end{itemize}
+
+So, very roughly, our energy budget for the race is 40 kWh. We can cruise for 2000 minutes at 1200 watts. We'll need much more precise calculations regarding array power and power consumption before we can have confidence in that number.
+
+\subsection{Weather}
+This section will estimate worst-case weather and its effect on array power, cruise speed, etc. The calculations above are all for best-case weather, which in the outback is also the common case. This section will also estimate the effect of perpendicular and parallel wind speed components on cruise speed.
+
+\subsection{Sensitivity}
+This section will estimate how many race minutes we lose to: 
+\begin{itemize}
+\item 1 kWh less power budget
+\item $0.01 \meter^2$ more frontal area
+\item $0.001$ more $C_D A$
+\item 1 kg more weight
+\item 1 hour of cloud cover
+\end{itemize}
+
+\subsection{Other teams}
+This section will estimate array power, power consumption, and race finish times for other teams.
+
+
+\end{document}
+

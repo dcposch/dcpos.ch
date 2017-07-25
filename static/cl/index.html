@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>craigslist haxx</title>
+    <link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <style>
+    body{
+        background: #000 url('grid_noise.png');
+        font: 30px Oswald; 
+        color: #333;
+    }
+    h1 {
+        margin:20px 10px;
+    }
+    input[name=cities] {
+        width: 900px;
+        display:block;
+    }
+    input[name=search] {
+        width: 315px;
+    }
+    input[type=submit] {
+        cursor:pointer;
+    }
+    select[name=type] {
+        width: 200px;
+    }
+    input,select {
+        width:80px;
+        font: 20px Oswald;
+        border: none; /*1px solid #555;*/
+        border-radius: 2px;
+        background: #eee;
+        margin: 10px;
+        padding: 4px 10px;
+    }
+    iframe {
+        width: 880px;
+        height: 800px;
+        margin: 10px;
+        border: none;
+    }
+    </style>
+    <script type="text/javascript">
+        function search(){
+            var f = document.forms[0];
+            var cities = f.cities.value.split(" ");
+            var min = f.min.value;
+            var max = f.max.value;
+            var q = f.search.value;
+            var type = f.type.value;
+            console.log(cities);
+
+            // generate new frames
+            var frameHtmls = [];
+            for(var i in cities){
+                var url = "//"+cities[i]+".craigslist.org/search/"+type+"?"+
+                    "query="+q+"&srchType=A&minAsk="+min+"&maxAsk="+max;
+                frameHtmls.push("<iframe src='"+url+"'></iframe>");
+            }
+            var framesHtml = frameHtmls.join("\n");
+
+            // replace iframes
+            var frames = document.getElementById("frames");
+            frames.innerHTML = framesHtml;
+        }
+    </script>
+</head>
+<body>
+    <h1>craigslist haxx</h1>
+    <form action="javascript:search()">
+        <input type="text" name="cities" value="sfbay sandiego losangeles sacramento stockton redding palmsprings mendocino santabarbara denver portland saltlakecity phoenix lasvegas"></input>
+        <input type="text" name="search" value="nsx"></input>
+        <input type="text" name="min" value="15000"></input>
+        <input type="text" name="max" value="30000"></input>
+        <select name="type">
+            <option value="cta" selected="selected">cars+trucks</option>
+            <option value="cto">cars+trucks by owner</option>
+            <option value="ctd">cars+trucks by dealer</option>
+            <option value="sss">everything</option>
+        </select>
+        <input type="submit" value="search"></input>
+    </form>
+    <div id="frames"></div>
+</body>
