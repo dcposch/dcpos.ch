@@ -3,7 +3,7 @@
 /***** Views *****/
 var battery = batteryChart()
     .width(250)
-    .height(350)
+    .height(272)
 var power = powerChart()
 var speedTable = teeTable()
     .title('SPEED/DIST')

@@ -75,8 +75,8 @@ function batteryChart(){
             .data(cells)
         bars.enter().append('rect')
             .attr('x', margin.left)
-            .attr('height', 6)
-            .attr('y', function(d,i){return yscale(i)-3})
+            .attr('height', 4)
+            .attr('y', function(d,i){return yscale(i)-1})
         bars
             .attr('width', function(d){return xscale(d.voltage)})
             .attr('fill', function(d){return color(d.voltage)})
@@ -85,13 +85,15 @@ function batteryChart(){
         var tempColor = d3.scale.threshold()
             .domain([50,60])
             .range(['black', 'orange', 'red']);
-        var labels = svg.select('#temperature').selectAll('text')
+        var temp = svg.select('#temperature')
+        var labels = temp.selectAll('text')
             .data(cells)
         labels.enter().append('text')
             .attr('dx', width)
-            .attr('dy', function(d,i){return yscale(i)})
+            .attr('dy', function(d,i){return yscale(i)+3})
             .attr('width', 30)
             .attr('height', 10)
+            .style('font-size', '9px')
             .style('text-anchor', 'end');
         labels
             .attr('fill', function(d){return tempColor(d.temperature)})

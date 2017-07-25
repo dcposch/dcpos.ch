@@ -4,8 +4,8 @@
  */
 function powerChart(){
     // Configuration
-    var width = 160, height = 200
-    var powerMin = -2000, powerMax = 4000 // watts
+    var width = 160, height = 260
+    var powerMin = -2000, powerMax = 3000 // watts
     var margin = {top:10, right:0, bottom:20, left:50}
     
     // Rendering
@@ -28,6 +28,12 @@ function powerChart(){
             .attr('x2', width-margin.right)
             .style('stroke','gray')
             .style('stroke-dasharray','1,1')
+        svg.append('text')
+            .attr('dx', 5).attr('dy', 10)
+            .text('Watts');
+        svg.append('text')
+            .attr('dx', width).attr('dy', 10)
+            .text('Amps');
     }
     function render(car){
         var busVoltage = car.busVoltage
