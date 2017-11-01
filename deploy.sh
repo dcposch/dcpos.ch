@@ -1,1 +1,1 @@
-rsync -avr --delete static dcpos.ch:/srv/http/dcpos.ch/
+rsync -avr static dcpos.ch:/srv/http/dcpos.ch/
