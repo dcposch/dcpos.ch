@@ -11,22 +11,27 @@ if (window.DatArchive && window.location.protocol !== 'dat:') {
 section {
   width: 640px;
   margin: 36px auto;
-  font: 12px monospace;
+}
+
+pre {
+  font-size: 12px;
+  font-family: "Andale Mono","Lucida Console",monospace;
 }
 
 #cursor {
   animation-name: cursor;
   animation-duration: 1s;
   animation-iteration-count: infinite;
+  display: inline-block;
 }
 
 @keyframes cursor {
-  0% { opacity: 0 }
-  50% { opacity: 0 }
-  51% { opacity: 1 }
-  100% { opacity: 1 }
+  0% { background-color: #000 }
+  5% { background-color: #fff }
+  50% { background-color: #fff }
+  55% { background-color: #000 }
+  100% { background-color: #000 }
 }
-
 </style>
 </head>
 <body>
@@ -74,24 +79,23 @@ PROJECTS
 
 LOCATION
 
-       2018-01-12 - Cambridge, MA ~ Hackathon Week ~ MIT IAP
        <script>
-         /*var d = new Date()
+         var d = new Date()
          var str = [
            d.getFullYear(),
            ('0' + (d.getMonth() + 1)).slice(-2),
            ('0' + d.getDate()).slice(-2)
          ].join('-')
-         document.write(str) */
-       </script>2018-01-21 - Venice Beach, CA
+         document.write(str)
+       </script> - Venice Beach, CA
+       2018-07-31 - SF - Decentralized Web Summit
 
        if you want to hang out, let me know. signal is best.
        first round is on me.
 </pre>
 <pre id="cursor">
-&#9608;
+&nbsp;
 </pre>
 </section>
 </body>
 </html>
-
