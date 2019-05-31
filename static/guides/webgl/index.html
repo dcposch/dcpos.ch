@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>html</title>
+        <meta charset="utf8" />
+        <style>
+            body {
+                width: 600px;
+                margin: 64px auto;
+                font: 14px/28px Consolas,Monaco,monospace;
+            }
+            strong {
+                font-style: italic;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>✨ webgl ✨</h1>
+        <p>webgl is the web api for 3d rendering.</p>
+        <canvas id="sparkle-cube" width="600" height="300"></canvas>
+        <p>the zen of webgl is simple and beautiful. you describe your world as data, giant tables of numbers. x, y, and z coordinates. color. shininess. the angle of each blade of grass.</p>
+        <p>then, you define pure functions called <strong>shaders</strong> that map those numbers first to vertices, then to pixels.</p>
+        <p>shaders are written in glsl, a dialect of c. it's compiled on the fly, by the browser.</p>
+        <p>TODO: snippet of a fragment shader</p>
+        <p>this requires a shift in thinking. you might be used to programs you ran manually. this takes at least a second or so.</p>
+        <p>TODO: rollover gif of hello world.</p>
+        <p>here in webgl, we'll be writing our shaders as tiny programs with a <strong>main()</strong> method, just as you're used to. but this main() will be called several times per pixel, for millions of pixels, 60 times a second!</p>
+        <p>the highly optimized, massively parallel hardware in every modern computer and phone--the gpu, or graphics processing unit--loads the tables of data, called <strong>buffers</strong>, then runs your shaders. first, the vertex shaders run once for each vertex in the scene. three vertices form a triangle.</p>
+        <p>TODO: infographic</p>
+        <p>the hardware efficiently rasterizes the triangles--figuring out which pixels each triangle touches. then, for each pixel x each triangle, your fragment shader produces a color. if multiple triangles touch a single pixel, you get many outputs. the hardware can use transparency to combine those fragments into the final pixel. this allows you to make things see-through.</p>
+        <p>TODO: many sparkle cubes</p>
+        <p>TODO: tutorial on how to make the sparkle cubes</p>
+        <p>happy hacking!</p>
+
+        <script src="mat4.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
