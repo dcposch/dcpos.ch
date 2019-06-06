@@ -66,7 +66,7 @@ function onKey(e) {
 frame()
 
 function frame() {
-    if (++fno % 14 === 0) {
+    if (++fno % 18 === 0) {
         turn()
     }
     window.requestAnimationFrame(frame)
