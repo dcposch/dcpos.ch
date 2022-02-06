@@ -1,98 +1,92 @@
 <!doctype html>
 <html>
+
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <title>DC Posch</title>
-<script>
-if (window.DatArchive && window.location.protocol !== 'dat:') {
-  window.location = "dat://dcpos.ch"
-}
-</script>
 <style>
-section {
-  width: 640px;
-  margin: 36px auto;
+* {
+  box-sizing: border-box;
 }
 
-pre {
-  font-size: 12px;
-  font-family: "Andale Mono","Lucida Console",monospace;
+body {
+  margin: 0;
+  color: #3a3;
+  background: #222;
+}
+
+a, a:visited {
+  color: #3a3;
+}
+
+main {
+  margin: 4ch auto;
+  width: 64ch;
+  white-space: pre;
+  font-size: 14px;
+  font-family: "Roboto Mono",monospace;
+  line-height: 1.5;
 }
 
 #cursor {
   animation-name: cursor;
-  animation-duration: 1s;
+  animation-duration: 1.5s;
   animation-iteration-count: infinite;
   display: inline-block;
 }
 
 @keyframes cursor {
-  0% { background-color: #000 }
-  5% { background-color: #fff }
-  50% { background-color: #fff }
-  55% { background-color: #000 }
-  100% { background-color: #000 }
+  0% { background-color: #222 }
+  5% { background-color: #292 }
+  50% { background-color: #292 }
+  55% { background-color: #222 }
+  100% { background-color: #222 }
+}
+
+strong {
+  font-weight: 500;
 }
 </style>
 </head>
-<body>
-<section>
-<pre>
-<strong>DCPOSCH(1)                 Daniel Clemens (DC) Posch                  DCPOSCH(1)</strong>
 
+<body>
+<main>
+<strong>DCPOSCH(1)        Daniel Clemens (DC) Posch        DCPOSCH(1)</strong>
 
 
 NAME
 
-       DC - Daniel Clemens Posch
+       dcposch.eth
 
 SYNOPSIS
 
        $ dc --contact
 
-         @dcposch - <a href="https://twitter.com/dcposch">twitter</a>, <a href="https://instagram.com/dcposch">instagram</a>, <a href="https://github.com/dcposch">github</a>
-         email: dcposch@cs.stanford.edu
-         signal: 650-215-0868
+         @dcposch  <a href="https://twitter.com/dcposch">twitter</a>, <a href="https://instagram.com/dcposch">instagram</a>, <a href="https://github.com/dcposch">github</a>
+         email     dcposch@cs.stanford.edu
+         signal    650-215-0868
 
        $ dc -v
 
          <a href="https://blog.dcpos.ch">https://blog.dcpos.ch</a>
-         <a href="https://blog.dcpos.ch/calm-technology">» Calm technology</a>
 
 INTERESTS
 
-       webgl, games, applied cryptography, privacy, decentralized protocols
+       technologist. friend to all dogs.
 
-       &gt; The height of cultivation is really nothing special. It is merely
-       &gt; simplicity--the ability to express the utmost with the minimum.
-       &gt; - Bruce Lee
-
-PROJECTS
-
-       now  - cto at <a href="https://dynasty.com">dynasty.com</a>
-       2016 - coauthor of <a href="https://webtorrent.io/desktop/">webtorrent desktop</a>
-              yes in my back yard. <a href="/yimby">dcpos.ch/yimby</a>, <a href="https://yimbyaction.org/">join us</a>
+       &gt; The height of cultivation is really nothing special
+       &gt; It is merely simplicity--the ability to express the
+       &gt; utmost with the minimum. - Bruce Lee
 
 LOCATION
 
-       <script>
-         var d = new Date()
-         var str = [
-           d.getFullYear(),
-           ('0' + (d.getMonth() + 1)).slice(-2),
-           ('0' + d.getDate()).slice(-2)
-         ].join('-')
-         str = str < '2018-08-03' ? '2018-08-03' : str
-         document.write(str)
-       </script> - Venice Beach, CA
-       2019-01-07 - Bay Area - Hack Lodge W19
+       2022-02 - Lost Coast
 
-       if you want to hang out, let me know. signal is best.
-       first round is on me.
-</pre>
-<pre id="cursor">
-&nbsp;
-</pre>
-</section>
+
+$ <div id="cursor">&nbsp;</div>
+</main>
 </body>
+
 </html>
