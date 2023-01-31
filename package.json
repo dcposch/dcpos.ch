@@ -1,0 +1,20 @@
+{
+  "name": "dcpos.ch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "package.json",
+  "scripts": {
+    "start": "http-server static/",
+    "deploy": "rsync -avr static dcpos.ch:/srv/http/dcpos.ch/ && rsync -avr scripts dcpos.ch:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcposch/dcpos.ch.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/dcposch/dcpos.ch/issues"
+  },
+  "homepage": "https://github.com/dcposch/dcpos.ch#readme"
+}
