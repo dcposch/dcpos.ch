@@ -7,6 +7,9 @@
     "start": "http-server static/",
     "deploy": "rsync -avr static dcpos.ch:/srv/http/dcpos.ch/ && rsync -avr scripts dcpos.ch:"
   },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dcposch/dcpos.ch.git"

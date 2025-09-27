@@ -1,88 +1,92 @@
 <!doctype html>
 <html>
-
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=540, user-scalable=no">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DC Posch</title>
 <style>
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+/* Design tokens (powers of two) */
+:root {
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-32: 32px;
+  --space-64: 64px;
+  --max-w: 512px;
 }
 
+html, body { height: 100%; }
 body {
   margin: 0;
-  color: #8d8;
-  background: #222;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  color: #111;
+  background: #fafafa;
 }
 
-a, a:visited {
-  color: #8d8;
-}
+a, a:visited { color: #111; text-decoration: underline; text-underline-offset: 2px; }
+a:hover { text-decoration: none; }
 
 main {
-  margin: 16px auto;
-  width: 512px;
-  white-space: pre;
-  font-size: 14px;
-  font-family: "Roboto Mono",monospace;
-  line-height: 1.5;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--space-32);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-64);
 }
 
-#cursor {
-  animation-name: cursor;
-  animation-duration: 1.5s;
-  animation-iteration-count: infinite;
-  display: inline-block;
-}
+h1 { font-size: 28px; font-weight: 600; margin: 0 0 var(--space-16) 0; letter-spacing: 0.2px; }
 
-@keyframes cursor {
-  0% { background-color: #222 }
-  5% { background-color: #7c7 }
-  50% { background-color: #7c7 }
-  55% { background-color: #222 }
-  100% { background-color: #222 }
-}
+.photo { width: 160px; border-radius: 6px; display: block; }
+.portrait { justify-self: end; align-self: start; }
+.section { margin-bottom: var(--space-32); }
+.label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #666; margin-bottom: var(--space-8); }
+p { margin: 0; line-height: 1.6; }
+ul { list-style: none; padding: 0; margin: 0; }
+li { margin-bottom: var(--space-8); }
 
-strong {
-  font-weight: 500;
-}
+/* Contact alignment */
+.contact .kv { display: grid; grid-template-columns: 64px 1fr; column-gap: var(--space-16); align-items: baseline; }
+.contact .key { color: #666; }
+
+blockquote { margin: 0; color: #777; }
+
+
 </style>
 </head>
-
 <body>
 <main>
-<strong>DCPOSCH(1)        Daniel Clemens (DC) Posch        DCPOSCH(1)</strong>
+  <!-- Top row: left title + contacts; right photo -->
+  <section>
+    <h1>DC Posch</h1>
+    <ul class="contact">
+      <li>@dcposch <a href="https://twitter.com/dcposch">x</a> · <a href="https://github.com/dcposch">github</a></li>
+      <li class="kv"><span class="key">email</span><span>dcposch@cs.stanford.edu</span></li>
+      <li class="kv"><span class="key">eth</span><span>dcposch.eth</span></li>
+    </ul>
+  </section>
 
+  <section class="portrait">
+    <img class="photo" src="img/dcposch.jpg" alt="Portrait of DC Posch">
+  </section>
 
-NAME
+  <!-- Second row: left projects; right quote with reserved header space -->
+  <section>
+    <div class="label">Projects</div>
+    <ul>
+      <li><a href="https://pay.daimo.com">Daimo Pay</a> · <a href="https://blog.daimo.com">Blog</a></li>
+      <li><a href="https://sf10x.org">SF10x</a></li>
+    </ul>
+  </section>
 
-       dcposch.eth
-
-SYNOPSIS
-
-       $ dc --contact
-
-         @dcposch  <a href="https://twitter.com/dcposch">twitter</a>, <a href="https://github.com/dcposch">github</a>
-         email     dcposch@cs.stanford.edu
-         signal    650-215-0868
-
-       $ dc -v
-
-         <a href="https://blog.dcpos.ch">https://blog.dcpos.ch</a>
-
-INTERESTS
-
-       Interested in technology. Friend to all dogs.
-
-       &gt; The height of cultivation is really nothing special
-       &gt; It is merely simplicity--the ability to express the
-       &gt; utmost with the minimum. - Bruce Lee
-
-
-$ <div id="cursor">&nbsp;</div>
+  <section>
+    <div class="label">&nbsp;</div>
+    <blockquote>
+      <p>Interested in technology. Friend to all dogs.</p>
+    </blockquote>
+  </section>
 </main>
 </body>
-
 </html>
