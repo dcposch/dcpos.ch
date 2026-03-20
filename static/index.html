@@ -33,36 +33,42 @@ main {
   margin: 0 auto;
   padding: var(--space-32);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-64);
+  grid-template-columns: 1fr auto;
+  gap: var(--space-32) var(--space-32);
 }
 
 h1 { font-size: 28px; font-weight: 600; margin: 0 0 var(--space-16) 0; letter-spacing: 0.2px; }
 
-.photo { width: 160px; border-radius: 6px; display: block; }
+.photo { width: 128px; border-radius: 6px; display: block; }
 .portrait { justify-self: end; align-self: start; }
-.section { margin-bottom: var(--space-32); }
 .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #666; margin-bottom: var(--space-8); }
 p { margin: 0; line-height: 1.6; }
 ul { list-style: none; padding: 0; margin: 0; }
 li { margin-bottom: var(--space-8); }
 
-/* Contact alignment */
-.contact .kv { display: grid; grid-template-columns: 64px 1fr; column-gap: var(--space-16); align-items: baseline; }
-.contact .key { color: #666; }
+/* KV grid */
+.kv { display: grid; grid-template-columns: 80px 1fr; column-gap: var(--space-16); align-items: baseline; }
+.key { color: #666; }
+.kv > :last-child { user-select: all; }
 
-blockquote { margin: 0; color: #777; }
+blockquote { margin: 0; color: #777; grid-column: 1 / -1; }
 
+@media (max-width: 480px) {
+  main {
+    grid-template-columns: 1fr;
+    gap: var(--space-32);
+  }
+  .portrait { justify-self: start; order: -1; }
+}
 
 </style>
 </head>
 <body>
 <main>
-  <!-- Top row: left title + contacts; right photo -->
   <section>
-    <h1>DC Posch</h1>
-    <ul class="contact">
-      <li>@dcposch <a href="https://twitter.com/dcposch">x</a> · <a href="https://github.com/dcposch">github</a></li>
+    <h1>Dan Clemens Posch</h1>
+    <ul>
+      <li class="kv"><span class="key">@dcposch</span><span><a href="https://x.com/dcposch">x</a> · <a href="https://github.com/dcposch">github</a></span></li>
       <li class="kv"><span class="key">email</span><span>dcposch@cs.stanford.edu</span></li>
       <li class="kv"><span class="key">eth</span><span>dcposch.eth</span></li>
     </ul>
@@ -72,21 +78,17 @@ blockquote { margin: 0; color: #777; }
     <img class="photo" src="img/dcposch.jpg" alt="Portrait of DC Posch">
   </section>
 
-  <!-- Second row: left projects; right quote with reserved header space -->
   <section>
     <div class="label">Projects</div>
     <ul>
-      <li><a href="https://pay.daimo.com">Daimo Pay</a> · <a href="https://blog.daimo.com">Blog</a></li>
+      <li><a href="https://daimo.com">Daimo</a></li>
       <li><a href="https://sf10x.org">SF10x</a></li>
     </ul>
   </section>
 
-  <section>
-    <div class="label">&nbsp;</div>
-    <blockquote>
-      <p>Interested in technology. Friend to all dogs.</p>
-    </blockquote>
-  </section>
+  <blockquote>
+    <p>Interested in technology. Friend to all dogs.</p>
+  </blockquote>
 </main>
 </body>
 </html>
